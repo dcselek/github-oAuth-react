@@ -17,7 +17,9 @@ function Dashboard() {
             let data = await response.json();
             setUserData(data);
 
-            fetchRepos(data.login);
+            if(response?.status === 200){
+                fetchRepos(data.login);
+            }
         }
 
         const fetchRepos = async (login) => {
@@ -50,12 +52,25 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div className='mt-5'>
+                <div className='mt-16'>
                     <div className="flex flex-col items-center justify-center">
                         <h1 className="text-2xl font-bold">Repositories</h1>
-                        {repos.map((repo) => 
-                            <RepoTable name={repo.name} owner={repo.owner.login} isPrivate={repo.private} lastRelease={new Date(repo.updated_at).toString()} downloadUrl={repo.downloads_url} />
-                        )}
+                        <div className="flex flex-col items-center justify-center">
+                            <table className="table-auto">
+                                <thead>
+                                    <tr>
+                                        <th className="px-4 py-2">Name</th>
+                                        <th className="px-4 py-2">Owner</th>
+                                        <th className="px-4 py-2">Public / Priv</th>
+                                        <th className="px-4 py-2">Last Release</th>
+                                        <th className="px-4 py-2">Download</th>
+                                    </tr>
+                                </thead>
+                                {repos.map((repo, key) => 
+                                    <RepoTable key={key} name={repo.name} owner={repo.owner.login} isPrivate={repo.private} lastRelease={new Date(repo.updated_at).toString()} downloadUrl={repo.downloads_url} />
+                                )}
+                            </table>
+                        </div>
                     </div>
                 </div>
             </DashboardLayout>
