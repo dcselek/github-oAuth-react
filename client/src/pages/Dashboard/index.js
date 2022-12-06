@@ -47,7 +47,7 @@ function Dashboard() {
                             <p className="text-lg">followers: {userData.followers}</p>
                             <p className="text-lg">following: {userData.following}</p>
                             <p className="text-lg">public repos: {userData.public_repos}</p>
-                            <p className="text-lg">priv repos: </p>
+                            <p className="text-lg">priv repos: {userData.total_private_repos}</p>
                             <p className="text-lg">{userData.blog}</p>
                         </div>
                     </div>
