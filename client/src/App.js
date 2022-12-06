@@ -31,12 +31,13 @@ function Home() {
 
   useEffect(() => {
     let code = new URLSearchParams(window.location.search).get('code');
-    if (code && token === null) {
+    if (code && (token === null || undefined)) {
       async function fetchToken() {
         let response = await fetch(`http://localhost:5000/auth?code=${code}`);
         let data = await response.json();
         localStorage.setItem('token', data.access_token);
         window.history.pushState({}, null, '/');
+        window.location.reload();
       }
 
       fetchToken();
