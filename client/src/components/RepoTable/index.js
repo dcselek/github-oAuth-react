@@ -41,13 +41,6 @@ function RepoTable({ name, owner, isPrivate, lastRelease, downloadUrl }) {
 
     }, [expanded, name, owner]);
 
-
-    useEffect(() => {
-        if (chartData.length > 0) {
-            console.log(chartData)
-        }
-    }, [chartData]);
-
     let duration = 300;
 
     const defaultStyle = {
