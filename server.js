@@ -40,6 +40,22 @@ app.get('/user', (req, res) => {
     })
 })
 
+app.get('/repos', (req, res) => {
+    let token = req.query.token;
+    let username = req.query.username;
+    let per_page = req.query.per_page;
+    axios.get(`https://api.github.com/users/${username}/repos?per_page=${per_page}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+            accept: 'application/vnd.github.v3+json'
+        }
+    }).then((response) => {
+        res.send(response.data);
+    }).catch((error) => {
+        res
+    })
+})
+
 app.listen(5000, () => {
     console.log('Server started on port 5000');
 });
