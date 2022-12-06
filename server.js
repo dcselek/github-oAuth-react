@@ -27,6 +27,19 @@ app.get('/auth', (req, res) => {
     })
 });
 
+app.get('/user', (req, res) => {
+    let token = req.query.token;
+    axios.get('https://api.github.com/user',{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }).then((response) => {
+        res.send(response.data);
+    }).catch((error) => {
+        res.send(error);
+    })
+})
+
 app.listen(5000, () => {
     console.log('Server started on port 5000');
 });
