@@ -2,6 +2,7 @@ let express = require('express');
 let cors = require('cors');
 let axios = require('axios');
 const bodyParser = require('body-parser');
+require('dotenv').config({path:__dirname+'/.env'})
 let app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.get('/auth', (req, res) => {
             accept: 'application/json'
         }
     }).then((response) => {
+        console.log(response.data);
         res.send(response.data);
     }
     ).catch((error) => {
