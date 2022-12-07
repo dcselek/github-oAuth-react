@@ -6,7 +6,7 @@ let app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-let client_secret = "d5e1e0a853d069a11548dadbad7850db2c1891b9";
+let client_secret = `${process.env.CLIENT_SECRET}`;
 let client_id = "b2fa34376e313b7517ec";
 let api = "https://api.github.com";
 
