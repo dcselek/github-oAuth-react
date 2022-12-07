@@ -46,7 +46,8 @@ app.get('/repos', (req, res) => {
     let username = req.query.username;
     let per_page = req.query.per_page;
     let page = req.query.page || 1;
-    axios.get(`${api}/users/${username}/repos?per_page=${per_page}&page=${page}`, {
+    let type = req.query.type || "all";
+    axios.get(`${api}/users/${username}/repos?per_page=${per_page}&page=${page}&type=${type}`, {
         headers: {
             Authorization: `Bearer ${token}`,
             accept: 'application/vnd.github.v3+json'
