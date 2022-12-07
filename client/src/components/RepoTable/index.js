@@ -61,10 +61,11 @@ function RepoTable({ data }) {
 
     async function onDownloadRepo() {
         let token = localStorage.getItem('token');
-        let response = await fetch(`http://localhost:5000/download?token=${token}&owner=${data?.owner.login}&repo=${data?.name}`);
-        let ddata = await response.json();
-        //NOTE: Downloading the repo but not working
-        console.log(ddata);
+        
+        let link = document.createElement('a');
+        link.href = `https://api.github.com/repos/${data.owner.login}/${data.name}/zipball/main`;
+        link.download = `${data.name}.zip`;
+        link.click();
     }
 
     let duration = 300;

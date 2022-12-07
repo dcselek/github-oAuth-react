@@ -9,7 +9,7 @@
 - Pagination ✔
 - Combobox ✔
 - Search Bar in Expanded Row ✔
-- Download link integration ??
+- Download link integration ✔
 - Priv Repo Access ??
 - Pull Access ??
 
@@ -22,7 +22,5 @@
 - Okunurlugu basit tutmak icin biraz daha fazla kod yazdim. Bu yuzden kodlarin bir kismi biraz uzun olabilir. Fakat bu benim icin daha okunabilir oldu. Ozellikle redux kullanmamayi tercih ettim biraz prop drilling yaptim.
 
 - Bunlar disinda server.js te biraz isleri uzattigimin farkindayim daha basic sekilde requestler tasarlayabilirdim fakat bu sekilde daha okunabilir ve daha kolay bir sekilde requestleri ayarlamak istedim.
-
-- Download request calismiyor [octorest](https://octokit.rest/GET/repos/%7Bowner%7D/%7Brepo%7D/zipball/%7Bref%7D?token=&owner=&repo=&ref=) bu linkteki gibi bir request attigimda 404 donuyor veya 302 donup linki vermiyor. Ben becerememis olabilirim cozumu varsa gosterirseniz sevinirim. Bu yuzden download linkini ekleyemedim.
 
 Task benim icin cok zevkli ve ogreticiydi. Tesekkurler.
