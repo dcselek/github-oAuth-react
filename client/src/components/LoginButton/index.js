@@ -8,7 +8,7 @@ function LoginButton() {
 
     return (
         <div>
-            <button className='border p-6 rounded-sm bg-[#6e5494] text-[#f5f5f5]' onClick={SignInWithGithub}>SignIn with Github</button>
+            <button className='border p-6 rounded-sm bg-[#6e5494] text-[#f5f5f5] hover:bg-[#8466b3]' onClick={SignInWithGithub}>SignIn with Github</button>
         </div>
     )
 }
