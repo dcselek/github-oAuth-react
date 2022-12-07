@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 
-function Combobox({onClick}) {
+function Combobox({ onClick }) {
 
     const [filter, setFilter] = useState("all");
 
@@ -13,19 +13,19 @@ function Combobox({onClick}) {
     }
 
     return (
-        <div>
+        <div className='my-5'>
             <div className="relative w-full lg:max-w-sm">
-            <select
-                className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600"
-                onChange={handleFilter}
-            >
-                {data.map((item, key) => (
-                    <option key={key} value={item}>
-                        {item}
-                    </option>
-                ))}
-            </select>
-        </div>
+                <select
+                    className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600"
+                    onChange={handleFilter}
+                >
+                    {data.map((item, key) => (
+                        <option key={key} value={item}>
+                            {item}
+                        </option>
+                    ))}
+                </select>
+            </div>
         </div>
     )
 }
