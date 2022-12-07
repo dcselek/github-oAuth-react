@@ -63,7 +63,8 @@ function RepoTable({ data }) {
         let token = localStorage.getItem('token');
         
         let link = document.createElement('a');
-        link.href = `https://api.github.com/repos/${data.owner.login}/${data.name}/zipball/main`;
+        link.target = '_blank';
+        link.href = `https://api.github.com/repos/${data.owner.login}/${data.name}/zipball`;
         link.download = `${data.name}.zip`;
         link.click();
     }

@@ -83,7 +83,7 @@ function Dashboard() {
                 <div className="w-1/3">
                     <ProfileCard data={userData} />
                 </div>
-                <div className='mt-16'>
+                <div className='mt-8'>
                     <div className="flex flex-col items-center justify-center">
                         <h1 className="text-2xl font-bold">Repositories</h1>
                         <Combobox onClick={setTypesFromCombobox} />
