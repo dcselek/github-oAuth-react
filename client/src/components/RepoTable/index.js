@@ -2,25 +2,46 @@ import React, { useEffect, useState } from 'react'
 import LineChart from '../LineChart';
 import { Transition } from "react-transition-group"
 import moment from 'moment';
+import Search from '../Search';
 
-function RepoTable({ name, owner, isPrivate, lastRelease, downloadUrl }) {
+function RepoTable({ data }) {
 
     const [expanded, setExpanded] = useState(false);
     const [chartData, setChartData] = useState([]);
+    const [commits, setCommits] = useState(0);
+    const [openPulls, setOpenPulls] = useState(0);
+    const [closedPulls, setClosedPulls] = useState(0);
 
     useEffect(() => {
-        const fetchCommits = async () => {
+        const fetchCommits = async (repoData) => {
             setChartData([]);
             let token = localStorage.getItem('token');
-            let response = await fetch(`http://localhost:5000/commits?token=${token}&owner=${owner}&repo=${name}`);
+            let response = await fetch(`http://localhost:5000/commits?token=${token}&owner=${repoData?.owner.login}&repo=${repoData?.name}`);
+            let pullsResponse = await fetch(`http://localhost:5000/pulls?token=${token}&owner=${repoData?.owner.login}&repo=${repoData?.name}`);
+            let pullsData = await pullsResponse.json();
             let data = await response.json();
+            setCommits(data.length);
+            //TODO: Pulls Data
+            let pullsArr;
 
+            if(pullsResponse.status === 200 && pullsData.length > 0){
+                pullsData.map((pull) => {
+                        if(pull.state === 'open'){
+                            setOpenPulls(openPulls + 1)
+                        }else{
+                            setClosedPulls(closedPulls + 1)
+                        }
+                });
+            }
+            
+
+
+            //TODO: Chart Data
             let dateArr = data.reverse().map((commit) => {
                 return {
                     Date: commit.commit.author.date,
                 }
             });
-
 
             for (let i = 0; i < dateArr.length; i++) {
                 let date = moment(dateArr[i].Date).format('YYYY-MM-DD');
@@ -35,11 +56,11 @@ function RepoTable({ name, owner, isPrivate, lastRelease, downloadUrl }) {
             }
         }
 
-        if (expanded) {
-            fetchCommits();
+        if (expanded && data !== null) {
+            fetchCommits(data);
         }
 
-    }, [expanded, name, owner]);
+    }, [expanded]);
 
     let duration = 300;
 
@@ -56,12 +77,12 @@ function RepoTable({ name, owner, isPrivate, lastRelease, downloadUrl }) {
     return (
         <tbody>
             <tr>
-                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{name}</td>
-                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{owner}</td>
-                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{!isPrivate ? "public" : "private"}</td>
-                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{moment(lastRelease).format("DD-MM-YYYY")}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{data.name}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{data.owner.login}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{!data.private ? "public" : "private"}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{moment(new Date(data.updated_at)).format("DD-MM-YYYY")}</td>
                 <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">
-                    <a href={downloadUrl} target="_blank" rel="noreferrer">
+                    <a href={data.downloads_url} target="_blank" rel="noreferrer">
                         <button className="bg-[#bd2c00] hover:bg-[#db5329] text-[#f5f5f5] p-2 rounded-sm">Download</button>
                     </a>
                 </td>
@@ -76,11 +97,39 @@ function RepoTable({ name, owner, isPrivate, lastRelease, downloadUrl }) {
                     </button>
                 </td>
             </tr>
+            {expanded &&
+                <tr>
+                    <td colSpan={5} className="border border-[#bd2c00] bg-gray-800 px-5 py-2">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className="border border-[#bd2c00] bg-gray-800 px-8 py-2">Commits</th>
+                                    <th className="border border-[#bd2c00] bg-gray-800 px-8 py-2">Closed Pull</th>
+                                    <th className="border border-[#bd2c00] bg-gray-800 px-8 py-2">Opened Pull</th>
+                                    <th className="border border-[#bd2c00] bg-gray-800 px-8 py-2">Stars</th>
+                                    <th className="border border-[#bd2c00] bg-gray-800 px-8 py-2">Search</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">{commits}</td>
+                                    <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">{closedPulls}</td>
+                                    <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">{openPulls}</td>
+                                    <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">{data.stargazers_count}</td>
+                                    <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">
+                                        <Search />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
             <Transition in={expanded} timeout={duration}>
                 {state => (
                     <tr>
-                        <td colSpan={5} className={`${expanded && state === "entered" ? "bg-white": "bg-transparent"}`} style={{ ...defaultStyle, ...transitionStyles[state] }}>
-                            {expanded && state === "entered" ? <LineChart data={chartData} /> : null }
+                        <td colSpan={5} className={`${expanded && state === "entered" ? "bg-white" : "bg-transparent"}`} style={{ ...defaultStyle, ...transitionStyles[state] }}>
+                            {expanded && state === "entered" ? <LineChart data={chartData} /> : null}
                         </td>
                     </tr>
                 )}
