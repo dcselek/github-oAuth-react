@@ -24,3 +24,15 @@
 - Bunlar disinda server.js te biraz isleri uzattigimin farkindayim daha basic sekilde requestler tasarlayabilirdim fakat bu sekilde daha okunabilir ve daha kolay bir sekilde requestleri ayarlamak istedim.
 
 Task benim icin cok zevkli ve ogreticiydi. Tesekkurler.
+
+### TECHS
+
+- React
+- NodeJS
+- Express
+- Axios
+- Cors
+- Tailwind
+- React Router
+- Moment
+- Ant Design Charts
