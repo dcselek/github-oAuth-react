@@ -46,7 +46,7 @@ function Dashboard() {
         if (userData !== null || currentPage !== 1) {
             fetchRepos(userData.login);
         }
-    }, [currentPage, userData]);
+    }, [currentPage]);
 
     function setPaginate(pageNumber) {
         setCurrentPage(pageNumber);
@@ -90,7 +90,7 @@ function Dashboard() {
                                 )}
                             </table>
                         </div>
-                        <Pagination page={currentPage} setPage={setPaginate} />
+                        <Pagination page={currentPage} onClick={setPaginate} />
                     </div>
                 </div>
             </DashboardLayout>
