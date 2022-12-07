@@ -12,11 +12,11 @@ let api = "https://api.github.com";
 
 app.get('/auth', (req, res) => {
     let code = req.query.code;
-    axios.post('https://github.com/login/oauth/access_token',{
+    axios.post('https://github.com/login/oauth/access_token', {
         client_id: client_id,
         client_secret: client_secret,
         code: code
-    },{
+    }, {
         headers: {
             accept: 'application/json'
         }
@@ -30,7 +30,7 @@ app.get('/auth', (req, res) => {
 
 app.get('/user', (req, res) => {
     let token = req.query.token;
-    axios.get(`${api}/user`,{
+    axios.get(`${api}/user`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -46,7 +46,7 @@ app.get('/repos', (req, res) => {
     let username = req.query.username;
     let per_page = req.query.per_page;
     let page = req.query.page || 1;
-    axios.get(`${api}/users/${username}/repos?per_page=${per_page}&page=${page}`,{
+    axios.get(`${api}/users/${username}/repos?per_page=${per_page}&page=${page}`, {
         headers: {
             Authorization: `Bearer ${token}`,
             accept: 'application/vnd.github.v3+json'
@@ -62,10 +62,43 @@ app.get('/commits', (req, res) => {
     let token = req.query.token;
     let owner = req.query.owner;
     let repo = req.query.repo;
-    axios.get(`${api}/repos/${owner}/${repo}/commits`,{
+    axios.get(`${api}/repos/${owner}/${repo}/commits`, {
         headers: {
             Authorization: `Bearer ${token}`,
             accept: 'application/vnd.github.v3+json'
+        }
+    }).then((response) => {
+        res.send(response.data);
+    }).catch((error) => {
+        res
+    })
+})
+
+app.get('/files', (req, res) => {
+    let token = req.query.token;
+    let owner = req.query.owner;
+    let repo = req.query.repo;
+    let path = req.query.path;
+    axios.get(`${api}/repos/${owner}/${repo}/contents/${path}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            accept: 'application/vnd.github.v3+json'
+        }
+    }).then((response) => {
+        res.send(response.data);
+    }).catch((error) => {
+        res
+    })
+})
+
+app.get('/pulls', (req, res) => {
+    let token = req.query.token;
+    let owner = req.query.owner;
+    let repo = req.query.repo;
+    axios.get(`${api}/repos/${owner}/${repo}/pulls`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            accept: 'application/vnd.github+json'
         }
     }).then((response) => {
         res.send(response.data);
