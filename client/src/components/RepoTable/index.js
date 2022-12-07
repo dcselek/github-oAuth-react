@@ -22,19 +22,15 @@ function RepoTable({ data }) {
             let data = await response.json();
             setCommits(data.length);
             //TODO: Pulls Data
-            let pullsArr;
-
-            if(pullsResponse.status === 200 && pullsData.length > 0){
+            if (pullsResponse.status === 200 && pullsData.length > 0) {
                 pullsData.map((pull) => {
-                        if(pull.state === 'open'){
-                            setOpenPulls(openPulls + 1)
-                        }else{
-                            setClosedPulls(closedPulls + 1)
-                        }
+                    if (pull.state === 'open') {
+                        setOpenPulls(openPulls + 1)
+                    } else {
+                        setClosedPulls(closedPulls + 1)
+                    }
                 });
             }
-            
-
 
             //TODO: Chart Data
             let dateArr = data.reverse().map((commit) => {
@@ -117,7 +113,7 @@ function RepoTable({ data }) {
                                     <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">{openPulls}</td>
                                     <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">{data.stargazers_count}</td>
                                     <td className="border border-[#bd2c00] bg-gray-800 px-8 py-2">
-                                        <Search />
+                                        <Search owner={data.owner.login} name={data.name} />
                                     </td>
                                 </tr>
                             </tbody>
