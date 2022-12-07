@@ -86,7 +86,7 @@ function Dashboard() {
                                     </tr>
                                 </thead>
                                 {repos.map((repo, key) =>
-                                    <RepoTable key={key} name={repo.name} owner={repo.owner.login} isPrivate={repo.private} lastRelease={new Date(repo.updated_at).toString()} downloadUrl={repo.downloads_url} />
+                                    <RepoTable key={key} data={repo} />
                                 )}
                             </table>
                         </div>
