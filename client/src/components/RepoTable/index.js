@@ -56,18 +56,18 @@ function RepoTable({ name, owner, isPrivate, lastRelease, downloadUrl }) {
     return (
         <tbody>
             <tr>
-                <td className="border border-[#bd2c00] px-5 py-2">{name}</td>
-                <td className="border border-[#bd2c00] px-5 py-2">{owner}</td>
-                <td className="border border-[#bd2c00] px-5 py-2">{!isPrivate ? "public" : "private"}</td>
-                <td className="border border-[#bd2c00] px-5 py-2">{moment(lastRelease).format("DD-MM-YYYY")}</td>
-                <td className="border border-[#bd2c00] px-5 py-2">
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{name}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{owner}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{!isPrivate ? "public" : "private"}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{moment(lastRelease).format("DD-MM-YYYY")}</td>
+                <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">
                     <a href={downloadUrl} target="_blank" rel="noreferrer">
-                        <button className="bg-[#bd2c00] text-[#f5f5f5] p-2 rounded-sm">Download</button>
+                        <button className="bg-[#bd2c00] hover:bg-[#db5329] text-[#f5f5f5] p-2 rounded-sm">Download</button>
                     </a>
                 </td>
                 <td>
                     <button className={`text-[#f5f5f5] p-2 rounded-sm ${expanded ? "rotate-180" : "rotate-0"} transition-all duration-500`} onClick={() => (setExpanded(!expanded))}>
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20" viewBox="0 0 512 512" fill='#fff'>
+                        <svg xmlns="http://www.w3.org/2000/svg" className='hover:fill-slate-50 fill-slate-300' version="1.1" width="20" height="20" viewBox="0 0 512 512">
                             <title />
                             <g id="icomoon-ignore">
                             </g>
