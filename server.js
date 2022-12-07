@@ -108,6 +108,25 @@ app.get('/pulls', (req, res) => {
     })
 })
 
+app.get('/download', async (req, res) => {
+    let token = req.query.token;
+    let owner = req.query.owner;
+    let repo = req.query.repo;
+
+    let response = await axios.get(`${api}/repos/${owner}/${repo}/zipball`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            accept: 'application/vnd.github.json'
+        }
+    }).then((response) => {
+        res.send(response.data);
+    }).catch((error) => {
+        res
+    })
+
+    //NOTE: This is not working
+})
+
 app.listen(5000, () => {
     console.log('Server started on port 5000');
 });

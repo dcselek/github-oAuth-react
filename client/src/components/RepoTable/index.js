@@ -3,6 +3,7 @@ import LineChart from '../LineChart';
 import { Transition } from "react-transition-group"
 import moment from 'moment';
 import Search from '../Search';
+import JsZip from 'jszip';
 
 function RepoTable({ data }) {
 
@@ -58,6 +59,14 @@ function RepoTable({ data }) {
 
     }, [expanded]);
 
+    async function onDownloadRepo() {
+        let token = localStorage.getItem('token');
+        let response = await fetch(`http://localhost:5000/download?token=${token}&owner=${data?.owner.login}&repo=${data?.name}`);
+        let ddata = await response.json();
+        //NOTE: Downloading the repo but not working
+        console.log(ddata);
+    }
+
     let duration = 300;
 
     const defaultStyle = {
@@ -78,9 +87,7 @@ function RepoTable({ data }) {
                 <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{!data.private ? "public" : "private"}</td>
                 <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">{moment(new Date(data.updated_at)).format("DD-MM-YYYY")}</td>
                 <td className="border border-[#bd2c00] bg-gray-800 px-5 py-2">
-                    <a href={data.downloads_url} target="_blank" rel="noreferrer">
-                        <button className="bg-[#bd2c00] hover:bg-[#db5329] text-[#f5f5f5] p-2 rounded-sm">Download</button>
-                    </a>
+                        <button className="bg-[#bd2c00] hover:bg-[#db5329] text-[#f5f5f5] p-2 rounded-sm" onClick={onDownloadRepo}>Download</button>
                 </td>
                 <td>
                     <button className={`text-[#f5f5f5] p-2 rounded-sm ${expanded ? "rotate-180" : "rotate-0"} transition-all duration-500`} onClick={() => (setExpanded(!expanded))}>
